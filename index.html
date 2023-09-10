@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Behold the Magic 12 Ball</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css" />
+
+
+        <title>Three.js</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>  
+    <script src = "output.js"></script>  
+
+    <body>
+            
+        <!-- Three.js cdn script -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.min.js"></script>
+
+        <!-- dat.Gui cdn script -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+
+        <!-- Ensure both Three.js and GLTFLoader have the same version -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/loaders/GLTFLoader.js"></script>
+
+        <!-- OrbitControls cdn script -->
+        <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+            
+        <div class = "header">
+            <h1 class = "hdrh1" style = "font-family:'Courier New'"><b>THE MAGIC 12TH BALL</b></h1> <!--can i find more fonts?-->
+            <h6 class = "hdrh6" style = "font-family: 'Courier New'">Howdy Ag! Ask the 12th ball anything, and it will 100%* answer your question</h6>
+            <p class = "hdrp" style = "font-family: 'Courier New'"><i>*Please only ask yes or no questions</i></p>
+        </div>
+        
+        <div class = "stuff">
+            <div class =" npt is-large is-loading">
+                <input id = "usertxt" class="input is-large" type="text" placeholder="Ask away!">
+            </div>
+    
+            <div class = "but">
+                <button id = "shake" class="button is-medium" style = "display: none;">Shake!</button>
+            </div>
+    
+            <div class = "reply">
+                <p style = "font-family: 'Courier New'" id = "result"></p>
+            </div>
+
+            <div class="model-content">
+                <!-- Three.js cdn script -->
+                <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.min.js"></script>
+    
+                <!-- dat.Gui cdn script -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+    
+                <!-- Ensure both Three.js and GLTFLoader have the same version -->
+                <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/build/three.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/loaders/GLTFLoader.js"></script>
+    
+                <!-- OrbitControls cdn script -->
+                <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/controls/OrbitControls.min.js"></script>
+               
+               <script>
+                    const { GLTFLoader } = THREE;
+    
+                    const gltfLoader = new GLTFLoader();
+    
+                    let scene, camera, renderer;
+    
+                    function init() {
+                        scene = new THREE.Scene();
+                        scene.background = new THREE.Color(0xdddddd);
+    
+                        camera = new THREE.PerspectiveCamera(6, 1, 1, 5000);
+                        camera.rotation.y = 45 / 180 * Math.PI;
+                        camera.position.x = 800;
+                        camera.position.y = 100;
+                        camera.position.z = 1000;
+                                
+                        renderer = new THREE.WebGLRenderer({ antialias: true });
+                        renderer.setSize(450, 450);
+                        document.body.appendChild(renderer.domElement);
+    
+                        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+                        controls.addEventListener('change', renderer);
+    
+                        // Create and add a directional light
+                        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+                        directionalLight.position.set(2, 3, 4); // Adjust the light's position as needed
+                        scene.add(directionalLight);
+    
+                        // Create and add a directional light
+                        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1);
+                        directionalLight2.position.set(-2, -3, 4); // Adjust the light's position as needed
+                        scene.add(directionalLight2);
+    
+                        // Load and add the 3D model
+                        gltfLoader.load('/12_ball_v5.gltf', function (gltf) {
+                        const model = gltf.scene;
+                        scene.add(model);
+
+                        // Call animate function to start rendering
+                        animate();
+                        // Call animate function to start rendering
+                        //animate();
+                        });
+                    }
+    
+    
+                    function animate() {
+                        renderer.render(scene, camera);
+                        requestAnimationFrame(animate);
+                    }
+    
+                    init();
+                </script>
+    
+            </div>
+        </div>
+
+        
+    </body>
+
+    <script>
+        let delay3;
+        //function to allow ball to shake before revealing answer
+        
+        function reveal(){
+            delay3 = setTimeout(generateRandomNumber, 5000);
+            
+            //document.getElementsByClassName("gif").setImage("https://hips.hearstapps.com/hmg-prod/images/cute-cat-photos-1593441022.jpg?crop=0.670xw:1.00xh;0.167xw,0&resize=640:*")
+        }
+        // Function to generate a random integer between min and max (inclusive)
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        // Function to generate and display a random number
+        function generateRandomNumber() {
+            
+            const min = 0; // Minimum value
+            const max = 19; // Maximum value (adjust as needed)
+            const randomNumber = getRandomInt(min, max);
+
+            let r = response[randomNumber];
+            document.getElementById("result").textContent = `Result: ${r.r}`;
+            
+        }
+
+        document.getElementById("shake").addEventListener("click", reveal); 
+
+        //document.getElementByClassName("gif").addEventListener("click", setImage);
+    </script>
+
+    <script>
+        // Get references to the input field and button
+        const textInput = document.getElementById("usertxt");
+        const submitButton = document.getElementById("shake");
+        
+
+        // Add an event listener to the input field
+        textInput.addEventListener("input", function() {
+            // Check if the input field is not empty
+            if (textInput.value.trim() !== "") {
+                // Show the button
+                submitButton.style.display = "inline-block";
+                
+            } else {
+                // Hide the button
+                submitButton.style.display = "none";
+                
+            }
+        });
+    </script>
+</html>
